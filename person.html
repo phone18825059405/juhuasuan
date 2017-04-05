@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+	<title>我的聚划算</title>
+	<meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <!--<link rel="stylesheet" href="public/stylesheets/base.css">-->
+</head>
+<style>
+*{
+    padding: 0;
+    margin:0;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #999;
+}
+body{
+    background-color: #f5f5f5;
+}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{*+height:1%;}
+    header{
+        padding: 40px 10px;
+        position: relative;
+        color: #fff;
+        background-image:-webkit-linear-gradient(-45deg, red, crimson); 
+        background-image:linear-gradient(-45deg,red,crimson);
+    }
+    header .back{
+        border-left: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        -webkit-transform:rotate(45deg);
+    }
+    header .col3{
+        margin-top: 10px;
+        text-align: center;
+    }
+    .middle{
+        display: -webkit-box;
+        display: box;
+        -webkit-box-pack:center;
+        -webkit-box-align:center;
+        box-pack:center;
+        box-align:center;
+        text-align: center;
+    }
+    .middle .img{
+        display: block;
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+        background-size: contain;
+    }
+    .col3{
+        font-size: 0;
+    }
+    .col3>*{
+        width: 33.333333%;
+        display: inline-block;
+        font-size: 14px;
+    }
+    .part{
+        margin-top: 15px;
+        background: #fff;
+    }
+    .part .title{
+        padding: 0 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .part .title h4{
+        display:inline-block;
+        padding: 15px 0;
+    }
+    .part .title .more{
+        float: right;
+        padding: 15px 0;
+    }
+    .multiply-wrapper{
+        display: -webkit-box;
+        display: box;
+        width: 100%;
+        text-align: center;  
+        padding: 20px 0;  
+    }
+    .multiply-wrapper>*{
+        -webkit-box-flex:1;
+        display: block;
+    }
+    .multiply-wrapper .icon,.multiply-wrapper span{
+        display: block;
+    }
+    .multiply-wrapper span{
+        margin-top: 8px;
+        font-size: 12px;
+    }
+    .multiply-wrapper .icon{
+        width: 32px;
+        height: 32px;
+        background-size: cover;
+        display: inline-block; 
+    }
+   
+</style>
+<body>
+    <header>
+        <span class="back"></span>
+        <div class="middle">
+            <div>
+                <div class="img" style="background-image: url('public/images/portrait.jpg')"></div>
+                <p>用户xxxxxxx</p>
+            </div>
+        </div>
+        <div class="col3">
+            <span>订单：35</span>
+            <span>消费：3340.05</span>
+            <span>节省：8425.56</span>
+        </div>
+    </header>
+    <div class="part">
+        <div class="title clearfix">
+            <h4>我的订单</h4>
+            <a href="orderManage.html?type=0" class="more">查看全部</a>
+        </div>
+        <div class="multiply-wrapper">
+            <a href="orderManage.html?type=1"><i class="icon" style="background-image: url('public/images/icon-person.jpg');background-position: 0 0"></i><span>待付款</span></a>
+            <a href="orderManage.html?type=2"><i class="icon" style="background-image: url('public/images/icon-person.jpg');background-position: -32px, 0"></i><span>待发货</span></a>
+            <!--<div><i class="icon" style="background-image: url('public/images/icon-person.jpg');background-position: -64px, 0"></i><span>待收货</span></div>
+            <div><i class="icon" style="background-image: url('public/images/icon-person.jpg');background-position: -96px, 0"></i><span>待评价</span></div>-->
+            <a href="cart.html"><i class="icon" style="background-image: url('public/images/icon-person.jpg');background-position: -126px, 0"></i><span>购物车</span></a>
+        </div>
+    </div>
+</body>
+    <script>
+        var allOrder = JSON.parse(localStorage.allOrder);
+
+        var orderLen = allOrder.length;
+        var totalSpend = 0;
+        var totalSave = 0;
+
+        if(allOrder.length){
+            allOrder.forEach(function(item){
+                totalSpend += item.totalPrice *1;
+                item.goods.forEach(function(item2){
+                    console.log(item2.oldPrice)
+                    totalSave += item2.oldPrice *1
+                })
+            })
+        }
+
+        var info = document.querySelectorAll('header .col3 span');
+        info[0].innerText = "订单："+orderLen;
+        info[1].innerText = "消费："+totalSpend;
+        info[2].innerText = "节省："+(totalSave - totalSpend);
+        
+    </script>
+</html>
